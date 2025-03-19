@@ -5,7 +5,7 @@
             const match = window.location.pathname.match(/^\/view\/(.+)/);
             if (match) {                
                 const a = document.createElement("a");
-                a.href = `https://${window.location.host}/${match[1]}`;
+                a.href = `https://${window.location.host}/drive/${match[1]}`;
                 a.download = match[1];
                 document.body.appendChild(a);
                 a.click();
