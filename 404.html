@@ -1,15 +1,25 @@
 <html>
 <head>
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", async function () {
             const match = window.location.pathname.match(/^\/view\/(.+)/);
             if (match) {                
-                const a = document.createElement("a");
-                a.href = `https://${window.location.host}/drive/${match[1]}`;
-                a.download = match[1];
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
+                const fileUrl = `https://${window.location.host}/drive/${match[1]}`;
+                try {
+                    const response = await fetch(fileUrl, { method: "HEAD" });
+                    if (response.ok) {
+                        const a = document.createElement("a");
+                        a.href = fileUrl;
+                        a.download = match[1];
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                    } else {
+                        console.log("issue finding file")
+                    }
+                } catch (error) {
+                    window.location.href = "index.html"
+                }
             }
         });
     </script>
